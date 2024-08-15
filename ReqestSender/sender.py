@@ -1,19 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
 import json
-# options = Options()
-# options.binary_location = '/home/robert/Applications/firefox-127.0b6/firefox/firefox-bin'
-# service = Service('/usr/bin/geckodriver')
-#
-# driver = webdriver.Firefox(service=service, options=options)
+from DataStructures.VehicleObject import Vehicle
 
 class Sender:
 
     def __init__(self):
-        self.pureUrl = 'https://auto.am/'
+        self.pureUrl = 'https://auto.am'
         self.searchUrl = 'https://auto.am/search'
         self.cookies = {
             '_ga_FP90EBRFYF': 'GS1.1.1723708277.33.1.1723709962.7.0.1578253137',
@@ -82,7 +75,21 @@ class Sender:
             cookies=self.cookies,
             data=search
         )
-        return response.text
+        if response.status_code == 200:
+            return response.text
+        else:
+            raise ValueError("Invalid Response Status code in getPageHtml")
+
+    def getCardHtml(self, offerLink):
+        cardUrl = self.pureUrl + offerLink
+        response = requests.get(cardUrl)
+        if response.status_code == 200:
+            return response.text
+        else:
+            raise ValueError("Invalid Response Status code in gertCardHtml")
+    def getCardData(self, cardHtml):
+        vehicle = Vehicle()
+        vehicle.createObject(cardHtml)
 
     @staticmethod
     def getCardsLinks(pageHtml):
@@ -101,4 +108,13 @@ class Sender:
 
 if __name__ == '__main__':
     sender = Sender()
-    print(sender.getCardsLinks(sender.getPageHtml(1)))
+    links = sender.getCardsLinks(sender.getPageHtml(1))
+    for link in links:
+        sender.getCardData(sender.getCardHtml(link))
+    links = sender.getCardsLinks(sender.getPageHtml(3))
+    for link in links:
+        sender.getCardData(sender.getCardHtml(link))
+    links = sender.getCardsLinks(sender.getPageHtml(2))
+    for link in links:
+        sender.getCardData(sender.getCardHtml(link))
+
