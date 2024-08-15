@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from DataStructures.VehicleObject import Vehicle
+import concurrent.futures
+
 
 class Sender:
 
@@ -37,8 +39,7 @@ class Sender:
             'Sec-Fetch-Site': 'same-origin',
         }
 
-
-    def getPageHtml(self,page):
+    def getPageHtml(self, page):
         search = {
             'search': json.dumps({
                 'category': '51',
@@ -88,8 +89,7 @@ class Sender:
     def getCardData(cardHtml):
         vehicle = Vehicle()
         vehicle = vehicle.createObject(cardHtml)
-        vehicle.showObject()
-        print('----------------')
+        return vehicle
 
     @staticmethod
     def getCardsLinks(pageHtml):
@@ -106,10 +106,21 @@ class Sender:
             print(f"An error occurred while parsing the page: {e}")
             return []
 
+    def processCards(self, page):
+        pageHtml = self.getPageHtml(page)
+        cardLinks = self.getCardsLinks(pageHtml)
+
+        def processSingleCard(cardLink):
+            cardHtml = self.getCardHtml(cardLink)
+            return self.getCardData(cardHtml)
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            parsedPageData = list(executor.map(processSingleCard, cardLinks))
+
+        return parsedPageData
+
+
 if __name__ == '__main__':
     sender = Sender()
-    links = sender.getCardsLinks(sender.getPageHtml(1))
-    for link in links:
-        sender.getCardData(sender.getCardHtml(link))
-
+    result = sender.processCards(1)
 
