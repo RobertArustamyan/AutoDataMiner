@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
 from DataStructures.VehicleObject import Vehicle
 import concurrent.futures
-
+import csv
+from datetime import datetime
 
 class Sender:
 
@@ -119,8 +121,30 @@ class Sender:
 
         return parsedPageData
 
+    @staticmethod
+    def saveData(parsedPageData,filename='../vehicles_data.csv'):
+        keys = parsedPageData[0].__dict__.keys()
+        file_exists = os.path.isfile(filename)
+
+        with open(filename, 'a', newline='', encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=keys)
+
+            if not file_exists:
+                writer.writeheader()
+
+            for vehicle in parsedPageData:
+                writer.writerow(vehicle.__dict__)
+
+
+    def getAllData(self):
+        for i in range(1, 200):
+            print(f'Page {i} started {datetime.now()}')
+            processedData = self.processCards(i)
+            print(f'Page {i} finished {datetime.now()}')
+            self.saveData(processedData)
+
 
 if __name__ == '__main__':
     sender = Sender()
-    result = sender.processCards(1)
+    sender.getAllData()
 
