@@ -63,9 +63,15 @@ class Vehicle:
             carDescription = None
         try:
             vinDiv = soup.find('div',class_='pad-left-6')
-            carVin = vinDiv.text if vinDiv else None
+            carVin = vinDiv.text.strip() if vinDiv else None
         except AttributeError as e:
             carVin = None
+
+        try:
+            contactDiv = soup.find('div',class_='contact-start')
+            phoneNumber = '\n'.join([link['href'].replace('tel:', '') for link in contactDiv.find_all('a', href=True) if link['href'].startswith('tel:')])
+        except AttributeError as e:
+            phoneNumber = None
 
         label_map = {
             'Վազքը': 'vehicleDistance',
@@ -90,7 +96,8 @@ class Vehicle:
             'vehicleModel': carModel,
             'vehiclePrice': usdPrice,
             'vehicleDescription': carDescription,
-            'vehicleVin': carVin
+            'vehicleVin': carVin,
+            'phoneNumber': phoneNumber
         }
         table = soup.find('table', class_='pad-top-6 ad-det')
         if table:
@@ -101,9 +108,12 @@ class Vehicle:
 
                 if label in label_map:
                     vehicle_data[label_map[label]] = value
-        print(vehicle_data)
         return cls(**vehicle_data)
 
+    def showObject(self):
+        attributes = vars(self)
+        for key, value in attributes.items():
+            print(f"{key}: {value}")
 
 if __name__ == '__main__':
     car = Vehicle()
