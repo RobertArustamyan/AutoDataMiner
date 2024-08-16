@@ -13,17 +13,10 @@ class Sender:
         self.pureUrl = 'https://auto.am'
         self.searchUrl = 'https://auto.am/search'
         self.cookies = {
-            '_ga_FP90EBRFYF': 'GS1.1.1723745309.35.1.1723745339.30.0.1575909923',
-            '_ga': 'GA1.1.1676492422.1722873823',
-            '_ym_uid': '1722873824559707672',
-            '_ym_d': '1722873824',
-            '_fbp': 'fb.1.1722873825429.177400002601892586',
-            'remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d': 'eyJpdiI6IlYzbnRGTVNObkNCZUVCSzU4UmxGVUE9PSIsInZhbHVlIjoiaXNvQk05a3pOTjlSdVd5TW5WOWkydHJSSHR1SUdVVklYa3pvb3Zqdk00b3dtTk5KYm1nYnYzSFNcL1M5UHJGdUJta0dCQUR0bU5nU0pqVEE0SEprc3duY29cL0NmVFAwV2szdTE5NlR1dXNkWEdpcGE2WFhtTU0wRmlkTXJJKzZWeWVManN1TG0yM240b3Q3bmxGckY5RGIwTTFPUEVPK0djXC9rcEZ4Q2pjdGs5MmhkRkRiUFhDb3ZPUGNhN0ZjWGQ5QmwrTzlET0kyQVQzTU1zRnVWVDlQXC9YK3ZTTkh4djNjNUlkcm5UT2krdkE9IiwibWFjIjoiZTFjZmQxNzU4Y2U5NWMwZDU0Mjk2ZGQyOGZiYjI4Y2YwMGEwN2UyOWNjMzNiZWM4NWRmMGU2MDA0YWExZjg3NiJ9',
-            '_gid': 'GA1.2.420357243.1723293346',
-            '_ym_isad': '2',
-            'XSRF-TOKEN': 'eyJpdiI6IlNFOXJFMm41UXdHQjFocVhDak5HdHc9PSIsInZhbHVlIjoiTURqa1VJOXJHaUVsUEVpY09lM3ZuQU5MR2xvZlwvQThhNDdhWndyTFlMcHNQMEhwZmx6UU1mZ2ZiSjg1Ulwvd1FhWDg4bnU2VnpNK25mbDNYOW1WTDYzMnNXN3lkZ1l3aUR0S3RKaFwvSFhaN3Z2VTVaTm13M0I0eDd5ZTVodjJQXC9KIiwibWFjIjoiNTc3YWM4ZTgyNDJkODkwZmNjMGEwMDNkMjlhYmVkZDg1OThlNmYwMzE4YmQ3NjBmMTk5ZTExNTA3MThhMzc5NSJ9',
-            'autoam_session': 'eyJpdiI6IkFwVzNoR1VxdU1ONWF3XC9JdElUV3lRPT0iLCJ2YWx1ZSI6InAwQUhoU0RFd1phM3F2RmFxVGRiSTR1bnhNMjVnZFVNS0pneklyQVp2dXRIZVJPeVFnOStIOFUrbGUxR1BrdWgzZ2tqVEZDOWN0c1NhWHZiQnM3WXVmZmZNc3B0SUZON0NMXC9PNFh1ZDl6UnFXVDdNRWd1TG50Z0F1WUdNVGtnNSIsIm1hYyI6IjMxMDcxY2EzM2EzMjE0ZjZmOWM5NzNmMDE2OGYwOWMzYjZlOTE3MzYxMTNiNjczYjBjMTFhYzJjMWRhNTdhOWMifQ%3D%3D',
-            '_ym_visorc': 'w',
+            'XSRF-TOKEN': 'eyJpdiI6Im9XZk9senVyUHg5V3g0V3ZheGNXa1E9PSIsInZhbHVlIjoid2hqNG5mVTJ6S2FBQU1LXC9vVGpOeFM2VVVqbDBDMjl6dURhRXMyNkFSbDFMQkU2RlpsREhET3hLTHRiUzZueVdJWlpxVk1CeVpiMERRakdJNkZ1aXduTE9cL0V6YVlkNklsTUkwd1pvWXgrNzZKVnhvU0NZWCtOdXB4ZUJTOHVweCIsIm1hYyI6IjkwNWExYTM5ZGIzNjcxYTY5YWNmM2U3NTc5NGFlYjYyOTA3NGJjNDZmNmJjYWQ3YWU3NmNmMjllY2Q5ODQyYTkifQ%3D%3D',
+            'autoam_session': 'eyJpdiI6IkRlNDdOM0VWMmZoZWJNWlQzY2tOeUE9PSIsInZhbHVlIjoid3NMV2JuQlRmSjJHM09ZTGtQR3VcL3pURUhvUFNHNFh1VURFdDVJejZrQm5PdG1KNkJKMXRKZHVVeHlCbjczVEhiK0loRVNSb3FpVENDblQwWWU4cHZIblBpWHp5bjlnT2ZhNk04anB1Z1hcL0tmYzg2a3kxeGxNa0Z1aWd6dlpUcSIsIm1hYyI6IjMxYWNjMTQzMGNkNGU0MDBjYjRiZWM0NGJlMzcyOTk0Y2MxMWM2NWJkMzdmZWU4MmRjNjA4ZWZjNWZhMDg1YTYifQ%3D%3D',
+            '_ga_FP90EBRFYF': 'GS1.1.1723790521.1.1.1723790543.38.0.1243323666',
+            '_ga': 'GA1.1.2097262647.1723790521',
         }
 
         self.headers = {
@@ -31,15 +24,18 @@ class Sender:
             'Accept': '*/*',
             'Accept-Language': 'en-US,en;q=0.5',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-CSRF-Token': '4fsLYUU3eh9NgDKstk3QbdoFDewSFbazCAioDfy6',
+            'X-CSRF-Token': 'aa3PoLkvcvG1AMwQMkFxfYz1FvrEmHpRhB03wAi4',
             'X-Requested-With': 'XMLHttpRequest',
             'Origin': 'https://auto.am',
+            'DNT': '1',
+            'Sec-GPC': '1',
             'Connection': 'keep-alive',
-            'Referer': 'https://auto.am/search/all?q={%22category%22:%2251%22,%22page%22:%221%22,%22sort%22:%22latest%22,%22layout%22:%22list%22,%22user%22:{%22dealer%22:%220%22,%22official%22:%220%22,%22id%22:%22%22},%22year%22:{%22gt%22:%221911%22,%22lt%22:%222025%22},%22usdprice%22:{%22gt%22:%220%22,%22lt%22:%22100000000%22},%22mileage%22:{%22gt%22:%2210%22,%22lt%22:%221000000%22}}',
+            'Referer': 'https://auto.am/search/all?q=%7B%22category%22%3A%221%22%2C%22year%22%3A%7B%22gt%22%3A%221911%22%2C%22lt%22%3A%222025%22%7D%2C%22usdprice%22%3A%7B%22gt%22%3A%220%22%2C%22lt%22%3A%22100000000%22%7D%7D',
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
         }
+
 
     def getPageHtml(self, page):
         search = {
@@ -88,9 +84,10 @@ class Sender:
             raise ValueError("Invalid Response Status code in gertCardHtml")
 
     @staticmethod
-    def getCardData(cardHtml):
+    def getCardData(cardHtml,cardUrl):
         vehicle = Vehicle()
-        vehicle = vehicle.createObject(cardHtml)
+        vehicle = vehicle.createObject(cardHtml,cardUrl)
+        #vehicle.showObject()
         return vehicle
 
     @staticmethod
@@ -114,7 +111,7 @@ class Sender:
 
         def processSingleCard(cardLink):
             cardHtml = self.getCardHtml(cardLink)
-            return self.getCardData(cardHtml)
+            return self.getCardData(cardHtml,cardLink)
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             parsedPageData = list(executor.map(processSingleCard, cardLinks))
@@ -122,7 +119,7 @@ class Sender:
         return parsedPageData
 
     @staticmethod
-    def saveData(parsedPageData,filename='../vehicles_data.csv'):
+    def saveData(parsedPageData,filename='vehicles_data.csv'):
         keys = parsedPageData[0].__dict__.keys()
         file_exists = os.path.isfile(filename)
 

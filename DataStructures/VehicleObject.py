@@ -2,11 +2,12 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 class Vehicle:
-    def __init__(self, vehicleYear=None, vehicleMake=None, vehicleModel=None, vehicleModification=None, vehicleDistance=None, vehicleClass=None,
+    def __init__(self,vehicleUrl=None, vehicleYear=None, vehicleMake=None, vehicleModel=None, vehicleModification=None, vehicleDistance=None, vehicleClass=None,
                  vehicleEngine=None, vehicleTransmission=None, vehicleBatteryPower=None, vehicleSteering=None,
                  vehicleOuterColor=None, vehicleInnerColor=None, vehicleHorsepower=None, engineVolume=None,
                  cylinderNumber=None, vehicleDriveType=None, vehicleCondition=None, tireSize=None, vehicleVin=None,
-                 vehicleDescription=None, vehiclePrice=None, phoneNumber=None):
+                 vehicleDescription=None,vehicleOptions=None, customsClear=None, vehiclePrice=None, phoneNumber=None):
+        self.vehicleUrl = vehicleUrl
         self.year = vehicleYear
         self.make = vehicleMake
         self.model = vehicleModel
@@ -27,12 +28,14 @@ class Vehicle:
         self.vin = vehicleVin
         self.condition = vehicleCondition
         self.description = vehicleDescription
+        self.options = vehicleOptions
+        self.customsClear = customsClear
         self.price = vehiclePrice
         self.phone = phoneNumber
         self.parsedTime = datetime.now()
 
     @classmethod
-    def createObject(cls, cardHtml):
+    def createObject(cls, cardHtml, cardUrl):
         soup = BeautifulSoup(cardHtml, 'lxml')
 
         yearTag = soup.find('a', class_='grey-text')
@@ -57,7 +60,8 @@ class Vehicle:
             usdPrice = None
 
         try:
-            descriptionDiv = soup.find('div', class_='ad-options', itemprop='description')
+            descriptionReference = soup.find('div',class_='nottii bltitle medium', text='Լրացուցիչ')
+            descriptionDiv = descriptionReference.find_next('div', class_='ad-options', itemprop='description')
             carDescription = descriptionDiv.text.strip() if descriptionDiv else None
         except AttributeError as e:
             carDescription = None
@@ -72,6 +76,18 @@ class Vehicle:
             phoneNumber = '\n'.join([link['href'].replace('tel:', '') for link in contactDiv.find_all('a', href=True) if link['href'].startswith('tel:')])
         except AttributeError as e:
             phoneNumber = None
+        try:
+            referenceDiv = soup.find('div', class_='nottii bltitle medium', text='Օպցիաներ')
+            optionsDiv = referenceDiv.find_next('div', class_='ad-options', itemprop='description')
+            options = optionsDiv.text.strip() if optionsDiv else None
+        except AttributeError as e:
+            options = None
+
+        try:
+            customsSpan = soup.find('span', class_='green-text', text='Մաքսազերծված է')
+            customInfo = True if customsSpan else False
+        except AttributeError as e:
+            customInfo = False
 
         label_map = {
             'Վազքը': 'vehicleDistance',
@@ -96,8 +112,11 @@ class Vehicle:
             'vehicleModel': carModel,
             'vehiclePrice': usdPrice,
             'vehicleDescription': carDescription,
+            'vehicleOptions': options,
             'vehicleVin': carVin,
-            'phoneNumber': phoneNumber
+            'phoneNumber': phoneNumber,
+            'customsClear': customInfo,
+            'vehicleUrl': 'https://auto.am' + cardUrl
         }
         table = soup.find('table', class_='pad-top-6 ad-det')
         if table:
