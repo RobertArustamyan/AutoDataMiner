@@ -7,7 +7,12 @@ import concurrent.futures
 import csv
 from datetime import datetime
 
+
 class Sender:
+    """
+    Class that is created for sending Requests.
+    !!Headers and cookies must be updated after few hours of not using!!
+    """
 
     def __init__(self):
         self.pureUrl = 'https://auto.am'
@@ -36,8 +41,12 @@ class Sender:
             'Sec-Fetch-Site': 'same-origin',
         }
 
-
-    def getPageHtml(self, page):
+    def getPageHtml(self, page: int) -> str:
+        """
+        Return page Html.
+        :param page: number of page which html is needed.
+        :return: returns html of the page.
+        """
         search = {
             'search': json.dumps({
                 'category': '51',
@@ -75,7 +84,12 @@ class Sender:
         else:
             raise ValueError("Invalid Response Status code in getPageHtml")
 
-    def getCardHtml(self, offerLink):
+    def getCardHtml(self, offerLink: str) -> str:
+        """
+        Returns Html of the Card.
+        :param offerLink: link of the car which Html is needed.
+        :return: Html of Card page.
+        """
         cardUrl = self.pureUrl + offerLink
         response = requests.get(cardUrl)
         if response.status_code == 200:
@@ -84,14 +98,25 @@ class Sender:
             raise ValueError("Invalid Response Status code in gertCardHtml")
 
     @staticmethod
-    def getCardData(cardHtml,cardUrl):
+    def getCardData(cardHtml: str, cardUrl: str) -> 'Vehicle':
+        """
+        Creates an instance of Vehicle and gives it html of Card.
+        :param cardHtml: Html of Card.
+        :param cardUrl: Offer number of Card.
+        :return: returns Vehicle object with parsed information.
+        """
         vehicle = Vehicle()
-        vehicle = vehicle.createObject(cardHtml,cardUrl)
-        #vehicle.showObject()
+        vehicle = vehicle.createObject(cardHtml, cardUrl)
+        # vehicle.showObject()
         return vehicle
 
     @staticmethod
-    def getCardsLinks(pageHtml):
+    def getCardsLinks(pageHtml: str) -> list:
+        """
+        Gets links from Html of page.
+        :param pageHtml: The Html of page.
+        :return: List of links with car offers.
+        """
         if not pageHtml:
             raise ValueError("The pageHtml parameter is empty or None.")
 
@@ -105,13 +130,18 @@ class Sender:
             print(f"An error occurred while parsing the page: {e}")
             return []
 
-    def processCards(self, page):
+    def processCards(self, page: int) -> list:
+        """
+        Runs processSingleCard function in multiple threads.
+        :param page: The number of page that should be parsed.
+        :return: List of Vehicle objects.
+        """
         pageHtml = self.getPageHtml(page)
         cardLinks = self.getCardsLinks(pageHtml)
 
         def processSingleCard(cardLink):
             cardHtml = self.getCardHtml(cardLink)
-            return self.getCardData(cardHtml,cardLink)
+            return self.getCardData(cardHtml, cardLink)
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             parsedPageData = list(executor.map(processSingleCard, cardLinks))
@@ -119,7 +149,13 @@ class Sender:
         return parsedPageData
 
     @staticmethod
-    def saveData(parsedPageData,filename='vehicles_data.csv'):
+    def saveData(parsedPageData: list, filename='Data/vehicles_data2.csv') -> None:
+        """
+        Saves parsed data.
+        :param parsedPageData: List of Vehicle objects.
+        :param filename: File name where data must be stored.
+        """
+
         keys = parsedPageData[0].__dict__.keys()
         file_exists = os.path.isfile(filename)
 
@@ -132,9 +168,11 @@ class Sender:
             for vehicle in parsedPageData:
                 writer.writerow(vehicle.__dict__)
 
-
-    def getAllData(self):
-        for i in range(1, 200):
+    def getAllData(self) -> None:
+        """
+        Goes through all pages and gets the data.
+        """
+        for i in range(1, 250):
             print(f'Page {i} started {datetime.now()}')
             processedData = self.processCards(i)
             print(f'Page {i} finished {datetime.now()}')
@@ -144,4 +182,3 @@ class Sender:
 if __name__ == '__main__':
     sender = Sender()
     sender.getAllData()
-
