@@ -33,7 +33,9 @@ This project is a Python-based web scraper designed to extract detailed informat
 
 ## Usage
 
-1. Update the cookies and headers of requests. Information you can get using curl requests. 
+1. Update the cookies and headers of requests. Information you can get using curl requests.
+Find the line showed in the picture and copy CURL.
+![](Images/img.png)
 
 2. Run the scraper:
 
